@@ -129,23 +129,28 @@ struct MenuView: View {
                         self.ipText = ""
                     })
                     
-                    Button("Copy", action: {
-                        let copyText = """
-    Location
-    --------
-    - Country: \(self.ip!.country)
-    - City: \(self.ip!.city)
-    - Region: \(self.ip!.region)
-    - Postal: \(self.ip!.postal)
-    - Latitude: \(self.ip!.latitude)
-    - Longitude: \(self.ip!.longitude)
-    
-    Other
-    -----
-    - Organisation: \(self.ip!.org)
-    - ASN: \(self.ip!.asn)
-    - Timezone: \(self.ip!.timezone)
-    """
+                    if self.ip!.hasData {
+                        Button("Copy", action: {
+                            let copyText = """
+        Location
+        --------
+        - Country: \(self.ip!.country)
+        - City: \(self.ip!.city)
+        - Region: \(self.ip!.region)
+        - Postal: \(self.ip!.postal)
+        - Latitude: \(self.ip!.latitude)
+        - Longitude: \(self.ip!.longitude)
+        
+        Other
+        -----
+        - Organisation: \(self.ip!.org)
+        - ASN: \(self.ip!.asn)
+        - Timezone: \(self.ip!.timezone)
+        """
+                            
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(copyText, forType: .string)
+                        })
                         
                         if self.ip!.hasValidCoordinates {
     //                        Button("Open in Maps") {
@@ -161,8 +166,14 @@ struct MenuView: View {
                                 withAnimation {
                                     showMap.toggle()
 
-                            if let url {
-                                NSWorkspace.shared.open(url)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        if let window = NSApp.keyWindow {
+                                            window.setContentSize(
+                                                window.contentView?.fittingSize ?? window.frame.size
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
