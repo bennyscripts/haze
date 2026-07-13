@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 
 struct MenuView: View {
     @ObservedObject var appDelegate: AppDelegate
@@ -6,6 +7,8 @@ struct MenuView: View {
     @State private var showData: Bool = false
     @State private var ipText: String = ""
     @State private var ip: IP?
+    @State private var cameraPosition: MapCameraPosition = .automatic
+    @State private var showMap = false
     
     func lookupIP() {
         if ipText == "" {
@@ -18,6 +21,21 @@ struct MenuView: View {
                     self.showData = true
                     self.ip = response
                     self.ipText = response.ip
+                    
+                    let coordinate = CLLocationCoordinate2D(
+                        latitude: ip!.latitude,
+                        longitude: ip!.longitude
+                    )
+
+                    cameraPosition = .region(
+                        MKCoordinateRegion(
+                            center: coordinate,
+                            span: MKCoordinateSpan(
+                                latitudeDelta: 5,
+                                longitudeDelta: 5
+                            )
+                        )
+                    )
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         if let window = NSApp.keyWindow {
@@ -53,6 +71,33 @@ struct MenuView: View {
                     if let ip = self.ip, ip.hasData {
                         LocationSection(ip: ip)
                         OtherSection(ip: ip)
+                        if self.ip!.hasValidCoordinates && showMap {
+                            Map(position: .constant(
+                                .region(
+                                    MKCoordinateRegion(
+                                        center: CLLocationCoordinate2D(
+                                            latitude: ip.latitude,
+                                            longitude: ip.longitude
+                                        ),
+                                        span: MKCoordinateSpan(
+                                            latitudeDelta: 1,
+                                            longitudeDelta: 1
+                                        )
+                                    )
+                                )
+                            )) {
+                                Marker(
+                                    "Approximate Location",
+                                    coordinate: CLLocationCoordinate2D(
+                                        latitude: ip.latitude,
+                                        longitude: ip.longitude
+                                    )
+                                )
+                            }
+                            .frame(height: 180)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.top, 18)
+                        }
                     } else {
                         Section {
                             Cell(
@@ -102,15 +147,19 @@ struct MenuView: View {
     - Timezone: \(self.ip!.timezone)
     """
                         
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(copyText, forType: .string)
-                    })
-                    
-                    if self.ip!.hasValidCoordinates && self.ip!.hasData {
-                        Button("Open in Maps") {
-                            let url = URL(
-                                string: "https://maps.apple.com/?ll=\(self.ip!.latitude),\(self.ip!.longitude)"
-                            )
+                        if self.ip!.hasValidCoordinates {
+    //                        Button("Open in Maps") {
+    //                            let url = URL(
+    //                                string: "https://maps.apple.com/?ll=\(self.ip!.latitude),\(self.ip!.longitude)"
+    //                            )
+    //
+    //                            if let url {
+    //                                NSWorkspace.shared.open(url)
+    //                            }
+    //                        }
+                            Button(showMap ? "Hide Map" : "Show Map") {
+                                withAnimation {
+                                    showMap.toggle()
 
                             if let url {
                                 NSWorkspace.shared.open(url)
