@@ -1,0 +1,19 @@
+# Xcode
+.DS_Store
+Builds/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# Build products
+*.app
+*.ipa
+*.dSYM
+*.xcarchive
+
+# Swift Package Manager
+.build/
+
+# Logs
+*.log
