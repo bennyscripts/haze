@@ -105,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     func showCopiedNotification(type: String) {
         let content = UNMutableNotificationContent()
-        content.title = "IPInfo"
+        content.title = "Haze"
         content.body = "\(type) copied to clipboard"
         content.sound = .default
 
