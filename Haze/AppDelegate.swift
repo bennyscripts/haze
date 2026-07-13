@@ -5,7 +5,7 @@ import UserNotifications
 import Combine
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
-    var version = "1.1.0"
+    var version = "1.2.0"
     var statusItem: NSStatusItem?
     var geoIP: IPGeoIP? = IPGeoIP()
     
@@ -262,7 +262,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         let menu = NSMenu()
 
         let lookupIP = NSMenuItem(
-            title: "Lookup IP",
+            title: "Lookup",
             action: #selector(openMenu),
             keyEquivalent: ""
         )
