@@ -3,29 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B23BE9E82800D2D100605160 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE9E72800D2D100605160 /* About.swift */; };
+		B2AF42B63002EC1700B61B0D /* MaxMindDB in Frameworks */ = {isa = PBXBuildFile; productRef = B2AF42B53002EC1700B61B0D /* MaxMindDB */; };
+		B2AF42B83002EE4900B61B0D /* IPGeoIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF42B73002EE4900B61B0D /* IPGeoIP.swift */; };
+		B2AF42BA3002EF8400B61B0D /* GeoDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF42B93002EF8400B61B0D /* GeoDatabaseManager.swift */; };
+		B2AF42C03003168800B61B0D /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF42BF3003168800B61B0D /* WelcomeView.swift */; };
 		B2C95D1928009E8600CDE681 /* IPInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C95D1828009E8600CDE681 /* IPInfo.swift */; };
 		B2C95D1D28009E8B00CDE681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C95D1C28009E8B00CDE681 /* Assets.xcassets */; };
 		B2C95D2028009E8B00CDE681 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C95D1F28009E8B00CDE681 /* Preview Assets.xcassets */; };
 		B2C95D2928009EBA00CDE681 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C95D2828009EBA00CDE681 /* Menu.swift */; };
-		B2C95D322800AAE000CDE681 /* IPApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C95D312800AAE000CDE681 /* IPApi.swift */; };
 		B2C95D342800B11A00CDE681 /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C95D332800B11A00CDE681 /* IP.swift */; };
 		B2C95D362800B31400CDE681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C95D352800B31400CDE681 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B23BE9E72800D2D100605160 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		B2AF42B73002EE4900B61B0D /* IPGeoIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGeoIP.swift; sourceTree = "<group>"; };
+		B2AF42B93002EF8400B61B0D /* GeoDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoDatabaseManager.swift; sourceTree = "<group>"; };
+		B2AF42BF3003168800B61B0D /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B2C95D1528009E8600CDE681 /* IpInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IpInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2C95D1828009E8600CDE681 /* IPInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPInfo.swift; sourceTree = "<group>"; };
 		B2C95D1C28009E8B00CDE681 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2C95D1F28009E8B00CDE681 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B2C95D2128009E8B00CDE681 /* IPInfo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IPInfo.entitlements; sourceTree = "<group>"; };
 		B2C95D2828009EBA00CDE681 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
-		B2C95D312800AAE000CDE681 /* IPApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPApi.swift; sourceTree = "<group>"; };
 		B2C95D332800B11A00CDE681 /* IP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 		B2C95D352800B31400CDE681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -35,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2AF42B63002EC1700B61B0D /* MaxMindDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,8 +86,8 @@
 		B2C95D2728009EA600CDE681 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF42BF3003168800B61B0D /* WelcomeView.swift */,
 				B2C95D2828009EBA00CDE681 /* Menu.swift */,
-				B23BE9E72800D2D100605160 /* About.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -91,7 +95,8 @@
 		B2C95D302800AA9100CDE681 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B2C95D312800AAE000CDE681 /* IPApi.swift */,
+				B2AF42B93002EF8400B61B0D /* GeoDatabaseManager.swift */,
+				B2AF42B73002EE4900B61B0D /* IPGeoIP.swift */,
 				B2C95D332800B11A00CDE681 /* IP.swift */,
 			);
 			path = Utils;
@@ -141,6 +146,9 @@
 				Base,
 			);
 			mainGroup = B2C95D0C28009E8600CDE681;
+			packageReferences = (
+				B207505430051AB400DFF9F1 /* XCLocalSwiftPackageReference "../MaxMindDBSwift" */,
+			);
 			productRefGroup = B2C95D1628009E8600CDE681 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -168,9 +176,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C95D362800B31400CDE681 /* AppDelegate.swift in Sources */,
-				B23BE9E82800D2D100605160 /* About.swift in Sources */,
-				B2C95D322800AAE000CDE681 /* IPApi.swift in Sources */,
+				B2AF42B83002EE4900B61B0D /* IPGeoIP.swift in Sources */,
+				B2AF42C03003168800B61B0D /* WelcomeView.swift in Sources */,
 				B2C95D2928009EBA00CDE681 /* Menu.swift in Sources */,
+				B2AF42BA3002EF8400B61B0D /* GeoDatabaseManager.swift in Sources */,
 				B2C95D342800B11A00CDE681 /* IP.swift in Sources */,
 				B2C95D1928009E8600CDE681 /* IPInfo.swift in Sources */,
 			);
@@ -229,7 +238,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -283,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -306,13 +315,14 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bentettmar.IpInfo;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.benny.ipinfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -333,13 +343,14 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bentettmar.IpInfo;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.benny.ipinfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -368,6 +379,32 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B207505430051AB400DFF9F1 /* XCLocalSwiftPackageReference "../MaxMindDBSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../MaxMindDBSwift;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2AF42B43002EC1700B61B0D /* XCRemoteSwiftPackageReference "MaxMindDBSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SunboyGo/MaxMindDBSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2AF42B53002EC1700B61B0D /* MaxMindDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2AF42B43002EC1700B61B0D /* XCRemoteSwiftPackageReference "MaxMindDBSwift" */;
+			productName = MaxMindDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B2C95D0D28009E8600CDE681 /* Project object */;
 }

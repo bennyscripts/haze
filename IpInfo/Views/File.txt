@@ -1,0 +1,56 @@
+ScrollView {
+    if self.ip?.hasData == true {
+
+        Section {
+            if self.ip!.country_name != "Undefined" {
+                Cell(leading: "Country", trailing: "\(self.ip!.country_name) (\(self.ip!.country))")
+            }
+
+            if self.ip!.city != "Undefined" {
+                Cell(leading: "City", trailing: self.ip!.city)
+            }
+
+            if self.ip!.region != "Undefined" {
+                Cell(leading: "Region", trailing: "\(self.ip!.region) (\(self.ip!.region_code))")
+            }
+
+            if self.ip!.postal != "Undefined" {
+                Cell(leading: "Postal", trailing: self.ip!.postal)
+            }
+
+            if self.ip!.latitude != 0.0 {
+                Cell(leading: "Latitude", trailing: String(self.ip!.latitude))
+            }
+
+            if self.ip!.longitude != 0.0 {
+                Cell(leading: "Longitude", trailing: String(self.ip!.longitude))
+            }
+
+        }.insetGroupedStyle(header: "Location")
+
+
+        Section {
+            if self.ip!.org != "Undefined" {
+                Cell(leading: "Organisation", trailing: self.ip!.org)
+            }
+
+            if self.ip!.asn != "Undefined" {
+                Cell(leading: "ASN", trailing: self.ip!.asn)
+            }
+
+            if self.ip!.timezone != "Undefined" {
+                Cell(leading: "Timezone", trailing: self.ip!.timezone)
+            }
+
+        }.insetGroupedStyle(header: "Other")
+
+    } else {
+
+        Section {
+            Cell(
+                leading: "Couldn't find any information for this IP address",
+                trailing: ""
+            )
+        }.insetGroupedStyle(header: "IP Info")
+    }
+}
