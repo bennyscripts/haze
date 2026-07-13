@@ -122,7 +122,7 @@ struct MenuView: View {
             }
         }
         .padding()
-        .frame(width: 380, alignment: .top)
+        .frame(width: 380)
     }
 }
 

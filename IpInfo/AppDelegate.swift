@@ -44,11 +44,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         let menuView = MenuView(appDelegate: self)
         
-        popOver.behavior = .transient
-        popOver.animates = true
-        popOver.contentSize = NSSize(width: 380, height: 0)
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: menuView)
+        popOver.behavior = .transient
+        popOver.animates = true
+        popOver.contentSize = NSSize(width: 380, height: 300)
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         setupMenuBarMenu()
