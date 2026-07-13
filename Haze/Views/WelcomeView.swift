@@ -17,7 +17,7 @@ struct WelcomeView: View {
                 .resizable()
                 .frame(width: 150, height: 150)
 
-            Text("IPInfo")
+            Text("Haze")
                 .font(.system(size: 34).weight(.bold))
 
             Text("""
