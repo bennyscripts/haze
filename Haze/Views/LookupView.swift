@@ -1,14 +1,26 @@
 import SwiftUI
 import MapKit
 
-struct MenuView: View {
+struct LookupView: View {
     @ObservedObject var appDelegate: AppDelegate
+    @ObservedObject var controller: LookupController
     
     @State private var showData: Bool = false
     @State private var ipText: String = ""
     @State private var ip: IP?
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var showMap = false
+    
+    let autoLookup: Bool
+    let addToRecents: Bool
+
+    init(appDelegate: AppDelegate, controller: LookupController, initialIP: String = "", autoLookup: Bool = false, addToRecents: Bool = true) {
+        self.appDelegate = appDelegate
+        self.controller = controller
+        self._ipText = State(initialValue: initialIP)
+        self.autoLookup = autoLookup
+        self.addToRecents = addToRecents
+    }
     
     func lookupIP() {
         if ipText == "" {
@@ -21,6 +33,18 @@ struct MenuView: View {
                     self.showData = true
                     self.ip = response
                     self.ipText = response.ip
+                    
+                    if addToRecents {
+                        appDelegate.recents.add(
+                            RecentLookup(
+                                id: UUID(),
+                                ip: response.ip,
+                                country: response.country_name,
+                                organisation: response.org,
+                                timestamp: Date()
+                            )
+                        )
+                    }
                     
                     let coordinate = CLLocationCoordinate2D(
                         latitude: ip!.latitude,
@@ -183,12 +207,25 @@ struct MenuView: View {
         }
         .padding()
         .frame(width: 380)
+        .onAppear {
+            if autoLookup && !ipText.isEmpty {
+                lookupIP()
+            }
+        }
+        .onReceive(controller.$requestedIP) { ip in
+            guard let ip else { return }
+
+            ipText = ip
+            lookupIP()
+
+            controller.requestedIP = nil
+        }
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
+struct LookupView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView(appDelegate: AppDelegate())
+        LookupView(appDelegate: AppDelegate(), controller: LookupController())
     }
 }
 

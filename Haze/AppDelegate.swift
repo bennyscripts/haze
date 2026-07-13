@@ -2,18 +2,30 @@ import SwiftUI
 import Foundation
 import Network
 import UserNotifications
+import Combine
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
-    var statusItem: NSStatusItem?
-    var popOver = NSPopover()
     var version = "1.1.0"
-    var aboutWindow: NSWindow?
-    var welcomeWindow: NSWindow?
+    var statusItem: NSStatusItem?
     var geoIP: IPGeoIP? = IPGeoIP()
+    
+    var welcomeWindow: NSWindow?
+    var lookupPopover = NSPopover()
+    var recentsPopover = NSPopover()
+    var lookupView: LookupView?
+    
+    let lookupController = LookupController()
+    
+    @Published var recents = RecentsManager()
+    private var recentsCancellable: AnyCancellable?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        recentsCancellable = recents.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
         
         if GeoDatabaseManager.shared.databasesExist() {
             geoIP = IPGeoIP()
@@ -42,13 +54,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             self.showWelcome()
         }
         
-        let menuView = MenuView(appDelegate: self)
+        let lookupView = LookupView(
+            appDelegate: self,
+            controller: lookupController,
+            autoLookup: false,
+            addToRecents: true
+        )
         
-        popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: menuView)
-        popOver.behavior = .transient
-        popOver.animates = true
-        popOver.contentSize = NSSize(width: 380, height: 300)
+        lookupPopover.contentViewController = NSViewController()
+        lookupPopover.contentViewController?.view = NSHostingView(rootView: lookupView)
+        lookupPopover.behavior = .transient
+        lookupPopover.animates = true
+        lookupPopover.contentSize = NSSize(width: 380, height: 300)
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         setupMenuBarMenu()
@@ -61,7 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
         
         if let MenuButton = statusItem?.button {
-            MenuButton.action = #selector(openMenu)
+//            MenuButton.action = #selector(openMenu)
             MenuButton.image = resizedLogo
             MenuButton.image?.isTemplate = true
         }
@@ -72,11 +89,47 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         return false
     }
     
+    func lookupIP(_ ip: String) {
+        lookupController.requestedIP = ip
+
+        guard let button = statusItem?.button else { return }
+
+        lookupPopover.show(
+            relativeTo: button.bounds,
+            of: button,
+            preferredEdge: .minY
+        )
+    }
+    
+    @objc
+    func showRecents() {
+        guard let button = statusItem?.button else { return }
+
+        NSApp.activate(ignoringOtherApps: true)
+
+        let recentsView = RecentsView(appDelegate: self)
+        
+        recentsPopover.contentViewController = NSViewController()
+        recentsPopover.contentViewController?.view = NSHostingView(rootView: recentsView)
+        recentsPopover.behavior = .transient
+        recentsPopover.animates = true
+        recentsPopover.contentSize = NSSize(width: 380, height: 300)
+        
+        recentsPopover.show(
+            relativeTo: button.bounds,
+            of: button,
+            preferredEdge: .minY
+        )
+        
+        DispatchQueue.main.async {
+            self.recentsPopover.contentViewController?.view.window?.makeKey()
+            self.recentsPopover.contentViewController?.view.window?.makeFirstResponder(nil)
+        }
+    }
+    
     func showWelcome() {
         let view = WelcomeView(appDelegate: self)
-
         let controller = NSHostingController(rootView: view)
-
         let window = NSWindow(
             contentViewController: controller
         )
@@ -127,7 +180,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
         NSApp.activate(ignoringOtherApps: true)
 
-        popOver.show(
+        lookupPopover.show(
             relativeTo: button.bounds,
             of: button,
             preferredEdge: .minY
@@ -226,6 +279,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             keyEquivalent: ""
         )
 
+        let recents = NSMenuItem(
+            title: "Recents",
+            action: #selector(showRecents),
+            keyEquivalent: ""
+        )
+        
         let quit = NSMenuItem(
             title: "Quit",
             action: #selector(quitApp),
@@ -233,6 +292,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         )
 
         menu.addItem(lookupIP)
+        menu.addItem(recents)
+        menu.addItem(.separator())
         menu.addItem(copyPublicIP)
         menu.addItem(copyLocalIP)
         menu.addItem(.separator())
